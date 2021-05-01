@@ -208,7 +208,7 @@ export default function ResourceListExample() {
   ];
 
   return (
-    <Page title="Corso Protected Orders" fullWidth="true">
+    <Page title="Protected Orders" fullWidth="true">
       
       <div style={{marginBottom: "2rem"}}>
 
