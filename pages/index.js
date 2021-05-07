@@ -1,11 +1,13 @@
 import React, {useCallback, useState} from 'react';
-import {Avatar, TextStyle, Button, Card, TextField, Filters, ResourceItem, ResourceList, Layout, Page, Heading, Select, DisplayText, Icon, Badge, Tabs} from '@shopify/polaris';
+import {Avatar, TextStyle, Button, Card, TextField, Filters, ResourceItem, ResourceList, Layout, Page, Heading, Select, DisplayText, Icon, Badge, Tabs, Pagination} from '@shopify/polaris';
 import {
   SecureMajor,
   ChecklistMajor,
-  BillingStatementDollarMajor
+  BillingStatementDollarMajor,
+  NoteMajor
 } from '@shopify/polaris-icons';
 import LineTripsTotal from './ordersLine';
+import Link from 'next/link'
 
 export default function ResourceListExample() {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -44,7 +46,7 @@ export default function ResourceListExample() {
       product: 'Mechanical Keyboard',
       price: '$65.99',
       orderDate: '5/1/2021',
-      tag: 'Protected'
+      tag: 'Under Protection'
     },
     {
       id: 212,
@@ -56,7 +58,7 @@ export default function ResourceListExample() {
       product: 'Gaming Mouse',
       price: '$75.99',  
       orderDate: '5/2/2021',
-      tag: 'Protected'
+      tag: 'Under Protection'
     },
     {
       id: 213,
@@ -68,10 +70,70 @@ export default function ResourceListExample() {
       product: 'HDMI Cables',
       price: '$39.99',
       orderDate: '5/3/2021',
-      tag: 'Claim Approved'
+      tag: 'Reordered'
     },
     {
-      id: 213,
+      id: 214,
+      url: 'customers/258',
+      name: 'Dallin Moon',
+      location: 'Broomfield, USA',
+      latestOrderUrl: 'orders/1459',
+      orderId: '1003',
+      product: 'Wifi Adapter',
+      price: '$99.99',
+      orderDate: '3/31/2021',
+      tag: 'Refunded'
+    },
+    {
+      id: 215,
+      url: 'customers/259',
+      name: 'Darren Harline',
+      location: 'San Clemente, USA',
+      latestOrderUrl: 'orders/1460',
+      orderId: '1004',
+      product: '128GB Flash Drive',
+      price: '$49.99',
+      orderDate: '2/15/2021',
+      tag: 'Claim Not Approved'
+    },
+    {
+      id: 117,
+      url: 'customers/341',
+      name: 'Paul Bartholomew',
+      location: 'St. George, USA',
+      latestOrderUrl: 'orders/1456',
+      orderId: '1000',
+      product: 'Mechanical Keyboard',
+      price: '$65.99',
+      orderDate: '5/1/2021',
+      tag: 'Under Protection'
+    },
+    {
+      id: 219,
+      url: 'customers/256',
+      name: 'James Warrick',
+      location: 'Los Angeles, USA',
+      latestOrderUrl: 'orders/1457',
+      orderId: '1001',
+      product: 'Gaming Mouse',
+      price: '$75.99',  
+      orderDate: '5/2/2021',
+      tag: 'Under Protection'
+    },
+    {
+      id: 203,
+      url: 'customers/257',
+      name: 'Nathan Usher',
+      location: 'San Clemente, USA',
+      latestOrderUrl: 'orders/1458',
+      orderId: '1002',
+      product: 'HDMI Cables',
+      price: '$39.99',
+      orderDate: '5/3/2021',
+      tag: 'Reordered'
+    },
+    {
+      id: 201,
       url: 'customers/258',
       name: 'Dallin Moon',
       location: 'Broomfield, USA',
@@ -83,7 +145,7 @@ export default function ResourceListExample() {
       tag: 'Delivered'
     },
     {
-      id: 214,
+      id: 178,
       url: 'customers/259',
       name: 'Darren Harline',
       location: 'San Clemente, USA',
@@ -204,11 +266,21 @@ export default function ResourceListExample() {
       id: 'prospects-1',
       content: 'Delivered',
       panelID: 'delivered-orders-1',
-    }
+    },
   ];
 
   return (
-    <Page title="Protected Orders" fullWidth="true">
+    <Page 
+      title="Corso Protection: May 2021"
+      fullWidth="true"
+      primaryAction={
+        <Link href="/statements">
+          <Button primary>
+            Monthly Statements
+          </Button>
+        </Link>
+      }
+    >
       
       <div style={{marginBottom: "2rem"}}>
 
@@ -216,25 +288,25 @@ export default function ResourceListExample() {
 
           <Layout.Section oneThird>
             <Card>
-              <div style={{padding: "2rem", flexDirection: "column"}}>
-                <div style={{display: "flex"}}>
-                  <div style={{marginRight: "1rem"}}>
+              <div className="p-8 flex-col">
+                <div className="flex">
+                  <div className="mr-4">
                     <Icon
                       source={SecureMajor}
                       color="base" />
                   </div>
                   <Heading>Protected Orders (MTD)</Heading>
                 </div>
-                <div style={{display: "flex", paddingTop: "1rem"}}>
+                <div className="flex pt-4">
 
-                  <div style={{flex: "0 0 50%"}}>
-                    Count<br/>
-                    <DisplayText size="large">5000</DisplayText>
+                  <div className="flex-1">
+                    Orders Protected<br/>
+                    <DisplayText size="large">4875</DisplayText>
                   </div>
 
-                  <div style={{flex: "0 0 50%"}}>
+                  <div className="flex-1">
                     Amount<br/>
-                    <DisplayText size="large">$7450</DisplayText>
+                    <DisplayText size="large">$365,265</DisplayText>
                   </div>
 
                 </div>
@@ -244,25 +316,32 @@ export default function ResourceListExample() {
 
           <Layout.Section oneThird>
             <Card>
-              <div style={{padding: "2rem", flexDirection: "column"}}>
-                <div style={{display: "flex"}}>
-                  <div style={{marginRight: "1rem"}}>
+              <div className="p-8 flex-col">
+                <div className="flex">
+                  <div className="mr-4">
                     <Icon
                       source={ChecklistMajor}
                       color="base" />
                   </div>
                   <Heading>Claims (MTD)</Heading>
                 </div>
-                <div style={{display: "flex", paddingTop: "1rem"}}>
-                  <div style={{flex: "0 0 50%"}}>
-                    Count<br/>
-                    <DisplayText size="large">50</DisplayText>
+                <div className="flex pt-4">
+
+                  <div className="flex-1">
+                    Claims<br/>
+                    <DisplayText size="large">13</DisplayText>
                   </div>
 
-                  <div style={{flex: "0 0 50%"}}>
-                    Amount<br/>
-                    <DisplayText size="large">$3750</DisplayText>
+                  <div className="flex-1">
+                    Refunds<br/>
+                    <DisplayText size="large">8</DisplayText>
                   </div>
+
+                  <div className="flex-1">
+                    Reorders<br/>
+                    <DisplayText size="large">5</DisplayText>
+                  </div>
+
                 </div>
               </div>
             </Card>
@@ -270,19 +349,19 @@ export default function ResourceListExample() {
 
           <Layout.Section oneThird>
             <Card>
-              <div style={{padding: "2rem"}}>
-                <div style={{display: "flex"}}>
-                  <div style={{marginRight: "1rem"}}>
+              <div className="p-8">
+                <div className="flex">
+                  <div className="mr-4">
                     <Icon
                       source={BillingStatementDollarMajor}
                       color="base" />
                   </div>
-                  <Heading>Invoice (MTD)</Heading>
+                  <Heading>You Save (MTD)</Heading>
                 </div>
-                <div style={{display: "flex", paddingTop: "1rem"}}>
-                  <div style={{flex: "0 0 50%"}}>
+                <div className="flex pt-4">
+                  <div className="flex-1">
                     Amount<br/>
-                    <DisplayText size="large">$3700</DisplayText>
+                    <DisplayText size="large">$975</DisplayText>
                   </div>
                 </div>
               </div>
@@ -294,22 +373,15 @@ export default function ResourceListExample() {
       </div>
       
       <Card>
-        <div style={{padding: "1.6rem"}}>
+        <div className="p-8">
           <Layout>
             <Layout.Section>
               <Heading>Protected Orders</Heading>
             </Layout.Section>
-            <Layout.Section secondary>
-              <Select
-                label="Range"
-                labelInline
-                options={options}
-                onChange={handleSelectChange}
-                value={selected}
-              />
-            </Layout.Section>
           </Layout>
-          <LineTripsTotal />
+          <div className="mt-8">
+            <LineTripsTotal />
+          </div>
         </div>
       </Card>
       
@@ -317,7 +389,7 @@ export default function ResourceListExample() {
 
         <Tabs tabs={tabs} selected={tabSelected} onSelect={handleTabChange}>
           
-          <div style={{padding: "2rem"}}>
+          <div className="p-8">
             <Heading>{tabs[tabSelected].content} Orders</Heading>
           </div>
 
@@ -339,7 +411,44 @@ export default function ResourceListExample() {
 
         </Tabs>
 
+        <div style={{padding: "2rem", display: "flex", justifyContent: "flex-end"}}>
+
+          <Pagination
+            hasPrevious
+            onPrevious={() => {
+              console.log('Previous');
+            }}
+            hasNext
+            onNext={() => {
+              console.log('Next');
+            }}
+          />
+        
+        </div>
+
       </Card>
+
+      <Card>
+        <div style={{padding: "2rem", flexDirection: "column"}}>
+          <div style={{display: "flex"}}>
+            <div style={{marginRight: "1rem"}}>
+              <Icon
+                source={NoteMajor}
+                color="base" />
+            </div>
+            <Heading>Invoice (MTD)</Heading>
+          </div>
+          <div style={{display: "flex", paddingTop: "1rem"}}>
+
+            <div style={{flex: "0 0 100%"}}>
+              Amount<br/>
+              <DisplayText size="large">$ 5179.69</DisplayText>
+            </div>
+
+          </div>
+        </div>
+      </Card>
+
     </Page>
   );
 
@@ -375,7 +484,7 @@ export default function ResourceListExample() {
           <Layout.Section oneThird>
             <div style={{textAlign: "right"}}>
 
-              { tag === 'Protected' ? <Badge status="success">{tag}</Badge> : tag === 'Claim Approved' ? <Badge status="attention">{tag}</Badge> : tag === 'Claim Not Approved' ? <Badge status="critical">{tag}</Badge> : <Badge>{tag}</Badge> }
+              { tag === 'Under Protection' ? <Badge status="success">{tag}</Badge> : tag === 'Reordered' ? <Badge status="attention">{tag}</Badge> : tag === 'Refunded' ? <Badge status="attention">{tag}</Badge> : tag === 'Claim Not Approved' ? <Badge status="critical">{tag}</Badge> : <Badge>{tag}</Badge> }
 
             </div>
           </Layout.Section>
